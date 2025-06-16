@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado Final</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .lyrics-box {
+            background: #efefef;
+            padding: 1rem;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            margin-top: 1rem;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .buttons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .buttons form {
+            flex: 1;
+            margin: 0.5rem;
+        }
+
+        .buttons button, .buttons a {
+            width: 100%;
+            padding: 1rem;
+            font-weight: bold;
+            background: #444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .buttons button:hover, .buttons a:hover {
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ title }}</h1>
+        <h2>Artista: {{ artist }}</h2>
+
+        <audio controls>
+            <source src="{{ url_for('static', filename='audio/' + audio_file) }}" type="audio/mpeg">
+            Tu navegador no soporta el reproductor de audio.
+        </audio>
+
+        <div class="lyrics-box">{{ lyrics }}</div>
+
+        <div class="buttons">
+            <form method="post" action="/final">
+                <input type="hidden" name="title" value="{{ title }}">
+                <input type="hidden" name="artist" value="{{ artist }}">
+                <input type="hidden" name="lyrics" value="{{ lyrics }}">
+                <button type="submit">Repetir generación</button>
+            </form>
+
+            <a href="{{ url_for('static', filename='audio/' + audio_file) }}" download>Descargar melodía</a>
+            <a href="{{ url_for('static', filename='lyrics/' + lyrics_file) }}" download>Descargar letra</a>
+            <a href="{{ url_for('index') }}">Volver al inicio</a>
+        </div>
+    </div>
+</body>
+</html>
+

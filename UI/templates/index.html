@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Letras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <h1>Elige un género musical</h1>
+    <div class="button-container">
+        <button class="genre-button" data-label="Rock"
+            style="background-image: url('{{ url_for('static', filename='images/rock.jpg') }}');"
+            onclick="location.href='/rock'"></button>
+
+        <button class="genre-button" data-label="Pop"
+            style="background-image: url('{{ url_for('static', filename='images/pop.jpg') }}');"
+            onclick="location.href='/pop'"></button>
+
+        <button class="genre-button" data-label="Rap"
+            style="background-image: url('{{ url_for('static', filename='images/rap.jpg') }}');"
+            onclick="location.href='/rap'"></button>
+    </div>
+</body>
+</html>

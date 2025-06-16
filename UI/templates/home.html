@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>LAILA - Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 4px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .start-button {
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #ff1a1a;
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>LAILA</h1>
+    <p>Tu generador inteligente de letras y melodías. Elige un género, escribe tu idea... y deja que LAILA componga el resto.</p>
+    <button class="start-button" onclick="window.location.href='{{ url_for('index') }}'">Empezar</button>
+</body>
+</html>
+

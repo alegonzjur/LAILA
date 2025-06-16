@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador Rock</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: rgba(0,0,0,0.6);
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            color: white;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff1a1a;
+            cursor: pointer;
+        }
+
+        .back-button {
+            margin-top: 1rem;
+            background: transparent;
+            color: #ccc;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .lyrics-box {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background-color: #f0f0f0;
+            color: black;
+            padding: 1em;
+            border-radius: 5px;
+        }
+        .lyrics-box p {
+            margin: 0.2em 0; /* Espacio vertical muy reducido */
+            line-height: 1.2; /* Altura de línea compacta */
+        }
+
+        .buttons {
+            margin-top: 1em;
+            text-align: center;
+        }
+
+        hr {
+            margin: 2rem 0;
+            border: 1px solid #ddd;
+        }
+        /* Spinner */
+        .spinner {
+            display: none;
+            margin: 20px auto;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #ff4d4d;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Generador de Letras - Rock</h1>
+        <div id="loadingSpinner" class="spinner"></div>
+        <form method="post">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" value="{{ title or '' }}">
+
+            <label for="artist">Artista:</label>
+            <input type="text" id="artist" name="artist" value="{{ artist or '' }}">
+
+            <label for="lyrics_prompt">Comienzo de la letra:</label>
+            <textarea id="lyrics_prompt" name="lyrics_prompt">{{ lyrics_prompt or '' }}</textarea>
+
+            <div class="buttons">
+                <button type="submit" name="action" value="repeat">Generar</button>
+            </div>
+        </form>
+
+        {% if generated %}
+            <hr>
+            <h2>{{ title }}</h2>
+            <h3>{{ artist }}</h3>
+            <div class="lyrics-box">
+                {% for line in generated.split('\n') %}
+                    <p>{{ line }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="buttons">
+                <form method="post">
+                    <input type="hidden" name="title" value="{{ title }}">
+                    <input type="hidden" name="artist" value="{{ artist }}">
+                    <input type="hidden" name="lyrics_prompt" value="{{ lyrics_prompt }}">
+                    <button type="submit" name="action" value="repeat">Repetir generación</button>
+                    <button type="submit" name="action" value="new">Nueva generación</button>
+                    <button type="submit" name="action" value="continue">Continuar con la música</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const forms = document.querySelectorAll("form");
+            const spinner = document.getElementById("loadingSpinner");
+    
+            forms.forEach(form => {
+                form.addEventListener("submit", function () {
+                    spinner.style.display = "block";
+                });
+            });
+        });
+    </script>
+</body>
+</html>
